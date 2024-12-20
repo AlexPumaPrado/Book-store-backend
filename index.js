@@ -1,3 +1,5 @@
+const specs = require("./src/swagger/swagger");
+const swaggerUI = require("swagger-ui-express");
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -9,10 +11,15 @@ require("dotenv").config();
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://reusabook.vercel.app"],
+    origin: [
+      "http://localhost:5173",
+      "https://reusabook.vercel.app",
+      "https://reusabook-sage.vercel.app"
+    ],
     credentials: true,
   })
 );
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 app.use(express.urlencoded({ extended: true }));
 
 //rutas
